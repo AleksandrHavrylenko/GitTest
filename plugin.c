@@ -4,3 +4,7 @@ void add() {
 
 }
 
+void delete() {
+
+}
+
