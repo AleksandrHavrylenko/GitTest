@@ -8,3 +8,6 @@ void delete() {
 
 }
 
+void edit() {
+
+}
