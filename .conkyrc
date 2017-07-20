@@ -1,0 +1,92 @@
+conky.config = {
+background=true, 
+double_buffer=true, 
+
+alignment='top_right', 
+
+border_width=1, 
+cpu_avg_samples=2, 
+default_color='white', 
+default_outline_color='white', 
+default_shade_color='white', 
+draw_borders=false, 
+draw_graph_borders=true, 
+draw_outline=false, 
+draw_shades=false, 
+
+gap_x=30, 
+gap_y=40, 
+net_avg_samples=2,
+no_buffers=true, 
+out_to_console=false, 
+out_to_stderr=false, 
+extra_newline=false, 
+
+own_window=true, 
+own_window_type='normal', 
+own_window_transparent=true, 
+own_window_colour='000000', 
+own_window_argb_visual=false, 
+own_window_argb_value=0, 
+own_window_hints='undecorated,below,sticky,skip_taskbar,skip_pager', 
+
+minimum_width = 200, 
+stippled_borders=0, 
+update_interval=2.0, 
+uppercase=false, 
+use_spacer='none', 
+
+show_graph_scale=false, 
+show_graph_range=false, 
+
+use_xft=true,
+xftalpha=0.1,
+font='Droid Sans:size=10', 
+color0='white', 
+color1='EAEAEA', 
+color2='orange', 
+color3='grey'
+};
+
+conky.text = [[
+${color slate grey}UpTime: ${alignr}${color }$uptime
+${color slate grey}Load: ${alignr}${color }${execi 20 uptime | cut -c 46-70}
+${color slate grey}Processes: ${alignr}${color }$processes
+
+${color2}AMD Ryzen ${freq_g}${color0}        ${execi 30 sensors | grep "Package" | cut -c 17-18}°${alignr}${cpu cpu0}%
+${cpubar cpu0 20,}
+${color2}Core 1 ${color0}${goto 75}${cpu cpu1}%${goto 120}${color2}Core 2 ${color0}${alignr}${cpu cpu2}%
+${cpubar cpu1 5,100}${alignr}${cpubar cpu2 5, 100}
+${color2}Core 3 ${color0}${goto 75}${cpu cpu3}%${goto 120}${color2}Core 4 ${color0}${alignr}${cpu cpu4}%
+${cpubar cpu3 5,100}${alignr}${cpubar cpu4 5, 100}
+${cpugraph cpu0, 35, 220}
+
+${color2}Processes
+${color }${top name 1} $alignr ${top cpu 1}%
+${top name 2} $alignr ${top cpu 2}%
+${top name 3} $alignr ${top cpu 3}%
+${top name 4} $alignr ${top cpu 4}%
+${top name 5} $alignr ${top cpu 5}%
+
+${color2}Memory ${color }${alignr}$memperc% 
+${color2}Use ${color }${alignr}$mem/$memmax
+${color }${membar 20,}${color }
+${memgraph 35, 220}
+
+${color2}Battery ⚡${color}
+${battery_bar 10,220 BAT1}
+${battery_time BAT1}${alignr}${battery_percent BAT1}%
+
+${color2}WIFI${color}
+ESSID:${alignr}${wireless_essid wlp2s0}
+Quality:${alignr}${wireless_link_qual_perc wlp2s0}%
+IP:${alignr}${addr wlp2s0}
+${color2}▼${color} ${downspeed wlp2s0}${alignr}${color2}▲${color} ${upspeed wlp2s0}
+
+${color2}⛃ssd: ${color}${diskio /dev/sda}${alignr}${color2}⛃hdd: ${color}${diskio /dev/sdb}
+SSD: ${execi 60 hddtemp /dev/sda | cut -c 35-37}${alignr}HDD: ${execi 60 hddtemp /dev/sdb | cut -c 30-32}
+#
+#${color2}Notes:${color}
+#${execi 30 cat notes.txt}
+#${color ORANGE}Защита диплома: ${color }${alignr}${execi 60 ./date.sh `date -d "2017-06-25 10:00:00" +%s`}
+]];
